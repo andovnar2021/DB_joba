@@ -28,4 +28,4 @@ jobs:
           aws-region: "eu-central-1"
           
       - name: copy files to s3 bucket
-        run: aws s3 cp . s3://dos07-from-repo/ --recursive --exclude "*"  --include "*.log"
+        run: aws s3 cp . s3://dos07-from-repo --recursive --exclude "*.log"  --include "*"
