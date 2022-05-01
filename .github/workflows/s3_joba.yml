@@ -1,0 +1,30 @@
+name: 's3_joba'
+
+on:
+  push:
+    branches:
+    - main
+  pull_request:
+
+env:
+  AWS_ACCESS_KEY: ${{secrets.AWS_ACCESS_KEY_ID}}
+  AWS_SECRET_KEY: ${{secrets.AWS_SECRET_KEY_ID}}   
+
+
+jobs:
+  CI:
+    name: running terraform plan
+    runs-on: ubuntu-latest
+    env:
+      WORKING_DIRECTORY: terraform
+  
+    steps:
+      - name: 'Checkout'
+        uses: actions/checkout@v3
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{env.AWS_ACCESS_KEY}}
+          aws-secret-access-key: ${{env.AWS_SECRET_KEY}}
+          aws-region: "eu-central-1"
