@@ -4,7 +4,7 @@ on:
   push:
     branches:
     - main
-  pull_request:
+  commit_comment :
 
 env:
   AWS_ACCESS_KEY: ${{secrets.AWS_ACCESS_KEY_ID}}
@@ -12,12 +12,10 @@ env:
 
 
 jobs:
-  CI:
-    name: running terraform plan
+  copy_files_to_s3:
+    name: start
     runs-on: ubuntu-latest
-    env:
-      WORKING_DIRECTORY: terraform
-  
+    
     steps:
       - name: 'Checkout'
         uses: actions/checkout@v3
@@ -28,3 +26,6 @@ jobs:
           aws-access-key-id: ${{env.AWS_ACCESS_KEY}}
           aws-secret-access-key: ${{env.AWS_SECRET_KEY}}
           aws-region: "eu-central-1"
+          
+      - name: copy files to s3 bucket
+        run: aws s3 cp . s3://dos07-from-repo/ --recursive --exclude "*"  --include "*.log"
