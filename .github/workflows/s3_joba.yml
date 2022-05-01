@@ -4,7 +4,7 @@ on:
   push:
     branches:
     - main
-  commit_comment :
+  pull_request :
 
 env:
   AWS_ACCESS_KEY: ${{secrets.AWS_ACCESS_KEY_ID}}
